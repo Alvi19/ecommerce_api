@@ -15,10 +15,9 @@ use Illuminate\Support\Facades\Hash;
  * )
  *
  * @OA\SecurityScheme(
- *     securityScheme="bearerAuth",
- *     type="http",
- *     scheme="bearer",
- *     bearerFormat="JWT"
+ *    securityScheme={{"bearer_token"}},
+ *    type="http",
+ *    scheme="bearer"
  * )
  */
 class AuthController extends Controller
