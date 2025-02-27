@@ -123,8 +123,7 @@
                                 "schema": {
                                     "properties": {
                                         "token": {
-                                            "type": "string",
-                                            "example": "1|abc12345...token..."
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"
@@ -164,6 +163,46 @@
                                         "email": {
                                             "type": "string",
                                             "example": "johndoe@example.com"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Logout User",
+                "description": "Menghapus token user dan melakukan logout",
+                "operationId": "fe8f3429cd6979b3b4517e186505f9f9",
+                "responses": {
+                    "200": {
+                        "description": "Logout berhasil",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Logout berhasil"
                                         }
                                     },
                                     "type": "object"
@@ -726,8 +765,9 @@
             }
         },
         "securitySchemes": {
-            "BearerAuth": {
+            "bearerAuth": {
                 "type": "http",
+                "bearerFormat": "JWT",
                 "scheme": "bearer"
             }
         }

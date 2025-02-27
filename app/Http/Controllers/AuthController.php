@@ -15,9 +15,10 @@ use Illuminate\Support\Facades\Hash;
  * )
  *
  * @OA\SecurityScheme(
- *     securityScheme="BearerAuth",
+ *     securityScheme="bearerAuth",
  *     type="http",
- *     scheme="bearer"
+ *     scheme="bearer",
+ *     bearerFormat="JWT"
  * )
  */
 class AuthController extends Controller
@@ -93,7 +94,7 @@ class AuthController extends Controller
      *         response=200,
      *         description="User authenticated successfully",
      *         @OA\JsonContent(
-     *             @OA\Property(property="token", type="string", example="1|abc12345...token...")
+     *             @OA\Property(property="token", type="string")
      *         )
      *     ),
      *     @OA\Response(
@@ -141,5 +142,36 @@ class AuthController extends Controller
     public function user(Request $request)
     {
         return response()->json(Auth::user());
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/logout",
+     *     summary="Logout User",
+     *     description="Menghapus token user dan melakukan logout",
+     *     tags={"Authentication"},
+     *     security={{"bearerAuth":{}}},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Logout berhasil",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Logout berhasil")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthorized"
+     *     )
+     * )
+     */
+    public function logout(Request $request)
+    {
+        $request->user()->tokens()->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Logout berhasil',
+        ], 200);
     }
 }
